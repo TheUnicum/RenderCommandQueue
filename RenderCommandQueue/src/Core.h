@@ -27,9 +27,17 @@
 #define FOR_EACH_5(FUNC, HEADER, SEPAR, a0, a1, a2, a3, a4, a5) HEADER FUNC(a0) SEPAR FUNC(a1) SEPAR FUNC(a2) SEPAR FUNC(a3) SEPAR FUNC(a4)
 #define FOR_EACH_6(FUNC, HEADER, SEPAR, a0, a1, a2, a3, a4, a5) HEADER FUNC(a0) SEPAR FUNC(a1) SEPAR FUNC(a2) SEPAR FUNC(a3) SEPAR FUNC(a4) SEPAR FUNC(a5)
 
+#define  RENDER_IMPL_B_0(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg0, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define  RENDER_IMPL_B_1(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg1, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define  RENDER_IMPL_B_2(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg2, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define  RENDER_IMPL_B_3(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg3, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define  RENDER_IMPL_B_4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg4, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define  RENDER_IMPL_B_5(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg5, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define  RENDER_IMPL_B_6(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B(arg6, N, arg0, arg1, arg2, arg3, arg4, arg5)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 #define RENDER(...) EXPAND(RENDER_IMPL_A(__VA_ARGS__, 6, 5, 4, 3, 2, 1, 0))
-#define RENDER_IMPL_A(code, arg0, arg1, arg2, arg3, arg4, arg5, N, ...) RENDER_IMPL_B(code, N, arg0, arg1, arg2, arg3, arg4, arg5)
+#define RENDER_IMPL_A(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...) RENDER_IMPL_B_##N(arg0, arg1, arg2, arg3, arg4, arg5, arg6, N, ...)
 #define RENDER_IMPL_B(code, N, ...) \
 	do{\
 		struct HZ_RENDER_UNIQUE_HZR\
@@ -51,4 +59,4 @@
 	}while(0)
 
 
-#define RENDER_S(...) { int self = 10; 	RENDER(__VA_ARGS__, self); }
+#define RENDER_S(...) { int self = 10; 	RENDER(self, __VA_ARGS__); }

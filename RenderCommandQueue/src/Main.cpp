@@ -20,10 +20,11 @@ int main()
 		std::string my_S6 = "STRINGA 4";
 		std::string my_S7 = "STRINGA 7";
 
+		#if 0:
 		// Testing int value
 		RENDER({ gl_func(i_data); }, i_data);
 
-		// Testing int strings
+		// Testing strings value
 		RENDER({ gl_funcS(my_S3); }, my_S2, my_S1, my_S4, my_S3);
 		RENDER({ gl_funcS(my_S2); }, my_S1, my_S2, my_S3);
 		RENDER({ gl_funcS(my_S1); }, my_S2, my_S3, my_S4, my_S5, my_S6, my_S1);
@@ -32,6 +33,21 @@ int main()
 		// simulate this/self
 		RENDER_S({ gl_func(self); });
 		RENDER_S({ gl_funcS("STRINGA TEXT"); });
+		#endif
+
+		// Testing int value
+		RENDER(i_data, { gl_func(i_data); });
+
+		// Testing strings value
+		RENDER(my_S2, my_S1, my_S4, my_S3, { gl_funcS(my_S3); });
+		RENDER(my_S1, my_S2, my_S3, { gl_funcS(my_S2); });
+		RENDER(my_S2, my_S3, my_S4, my_S5, my_S6, my_S1, { gl_funcS(my_S1); });
+		RENDER(my_S2, my_S3, my_S4, my_S5, my_S6, my_S1, { gl_funcS(my_S1); gl_funcS("Funzione Scipt"); });
+
+		// simulate this/self
+		RENDER_S({ gl_func(self); });
+		RENDER_S({ gl_funcS("STRINGA TEXT"); });
+
 	}
 	cmd_queue.Execute();
 
